@@ -1,8 +1,16 @@
 import streamlit as st
 from src.process import summarize_article
+import asyncio
 
 # from src.profiling import message_to_user
 st.set_page_config(page_title="TL;DR, GPT?", page_icon="random")
+
+hide_menu_style = """
+        <style>
+        #MainMenu {visibility: hidden;}
+        </style>
+        """
+st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 st.title("TL;DR?")
 
@@ -25,7 +33,9 @@ if _sub:
     stat_error = st.empty()
     stat_result = st.empty()
     try:
-        sumart = summarize_article(_url, stat_info, maxwords, emotion=emoji)
+        sumart = asyncio.run(
+            summarize_article(_url, stat_info, maxwords, emotion=emoji)
+        )
 
         stat_result.success(sumart)
 

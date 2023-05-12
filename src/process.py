@@ -1,6 +1,6 @@
 import openai
-from src.preprocess import *
-from src.textgetter import *
+from src.preprocess import splittochunk, summarize_chunks
+from src.textgetter import get_text_from_url
 from src.profiling import express
 from dotenv import load_dotenv
 import os
@@ -8,7 +8,7 @@ import os
 load_dotenv()
 
 
-def summarize_article(
+async def summarize_article(
     url: str = "",
     st_status=None,
     num_words: int = 20,
@@ -27,7 +27,7 @@ def summarize_article(
                 )
             )
 
-        txt = summarize_chunks(
+        txt = await summarize_chunks(
             splittochunk(txt),
             openaiapi=os.environ.get("OPENAIAPI"),
         )
