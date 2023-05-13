@@ -5,6 +5,13 @@
 		}
 	],
 	"settings": {
-		"docwriter.style": "Doxygen"
+		"docwriter.style": "Doxygen",
+		"terminal.explorerKind": "external",
+		"[python]": {
+			"editor.defaultFormatter": "ms-python.black-formatter"
+		},
+		"python.formatting.provider": "none",
+		"docwriter.progress.trackFunctions": false,
+		"docwriter.progress.trackMethods": false
 	}
 }
