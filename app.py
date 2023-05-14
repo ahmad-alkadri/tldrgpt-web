@@ -21,7 +21,7 @@ with col1:
     emoji = st.radio("Profile", 
                      ["😒", "😊", "🤓"], horizontal=True)
 with col2:
-    maxwords = st.number_input("Max. sentences", 20, 100, step=5)
+    maxwords = st.number_input("Max. words", 20, 100, step=5)
 
 with st.form("sum-submit-url", clear_on_submit=True):
     st.info(message_to_user(emoji))
