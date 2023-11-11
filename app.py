@@ -13,8 +13,9 @@ hide_menu_style = """
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 st.markdown(
-    "<h1 style='text-align: center; line-height: 1.5; color: #0D8266'>TL;DR?</h1>", 
-    unsafe_allow_html=True)
+    "<h1 style='text-align: center; line-height: 1.5; color: #12ba93'>TL;DR?</h1>",
+    unsafe_allow_html=True,
+)
 
 MAX_MESSAGES = 11
 MAX_WORDS_SUMMARY = 50
@@ -25,6 +26,16 @@ if "text" not in st.session_state:
     st.session_state["text"] = ""
 if "messages" not in st.session_state:
     st.session_state.messages = []
+
+with st.expander("About the app"):
+    st.info(
+        "Query an article, a web page's content, using OpenAI's GPT,\
+        by simply entering the URL to the webpage on the input field\
+        below and ask your questions through the chat interface.\
+        A weekend project, not for production, ask at max. 5 questions. \
+        If you face any problem, simply raise an [Issue](https://github.com/ahmad-alkadri/tldrgpt-web/issues) \
+        or contact the developer, [Alkadri](https://ahmadalkadri.com)"
+    )
 
 with st.form("sum-submit-url", clear_on_submit=False):
     _url = st.text_input("URL input", placeholder="https://example.com/")
@@ -65,10 +76,7 @@ if "docQuery" in st.session_state and len(st.session_state["text"]) > 0:
                 {"role": "assistant", "content": full_response, "is_summary": True}
             )
 
-    
-    prompt = placeInput.chat_input(
-        "What else do you want to know?"
-    )
+    prompt = placeInput.chat_input("What else do you want to know?")
     if prompt:
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
@@ -100,5 +108,6 @@ if "docQuery" in st.session_state and len(st.session_state["text"]) > 0:
                 )
     if len(st.session_state.messages) >= MAX_MESSAGES:
         placeInput.empty()
-        st.info("You've reached the maximum number of messages for this session. Please refresh the page or input another URL to start a new session.")
-    
+        st.info(
+            "You've reached the maximum number of messages for this session. Please refresh the page or input another URL to start a new session."
+        )
